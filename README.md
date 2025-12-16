@@ -37,6 +37,7 @@ docker compose up --build
 - `REFRESH_TOKEN_EXPIRES_MINUTES` (по умолчанию 43200, то есть 30 дней)
 - `SESSION_TTL_MINUTES` (по умолчанию 1440)
 - `SESSION_EXTEND_MINUTES` (rolling продление, по умолчанию 10080 = 7 дней)
+- `SESSION_ABSOLUTE_TIMEOUT_DAYS` (жесткий предел жизни сессии, по умолчанию 30 дней)
 - `SESSION_ROLLING_INTERVAL_MINUTES` (интервал проверки для продления, по умолчанию 10)
 - `SESSION_COOKIE_NAME`, `SESSION_COOKIE_SECURE`, `SESSION_COOKIE_DOMAIN`
 - `ACCESS_COOKIE_NAME`, `REFRESH_COOKIE_NAME` (по умолчанию `access_token` / `refresh_token`)

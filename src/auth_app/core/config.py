@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     session_ttl_minutes: int = 60 * 24
     session_extend_minutes: int = 60 * 24 * 7
     session_rolling_interval_minutes: int = 10
+    session_absolute_timeout_days: int = 30
     session_cookie_name: str = "session_id"
     session_cookie_secure: bool = False
     session_cookie_domain: str | None = None

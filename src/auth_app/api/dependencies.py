@@ -45,8 +45,10 @@ async def get_current_user_from_session(
 ) -> User:
     token_hash = _get_session_token_hash(request)
     stored_session = await _find_session(session, token_hash)
-    await _extend_if_needed(session, stored_session)
-    await _check_expiry(session, stored_session)
+    now = datetime.now(timezone.utc)
+    absolute_expires_at = await _ensure_not_absolute_expired(session, stored_session, now)
+    await _extend_if_needed(session, stored_session, now, absolute_expires_at)
+    await _check_expiry(session, stored_session, now)
     user = await _get_session_user(session, stored_session)
     return user
 
@@ -66,29 +68,45 @@ async def _find_session(session: SessionDep, token_hash: str) -> UserSession:
     return stored_session
 
 
-async def _extend_if_needed(session: SessionDep, stored_session: UserSession) -> None:
-    now = datetime.now(timezone.utc)
+def _absolute_deadline(stored_session: UserSession) -> datetime:
+    return stored_session.created_at + timedelta(days=settings.session_absolute_timeout_days)
+
+
+async def _ensure_not_absolute_expired(
+    session: SessionDep, stored_session: UserSession, now: datetime
+) -> datetime:
+    absolute_expires_at = _absolute_deadline(stored_session)
+    if now >= absolute_expires_at:
+        await _expire_session(session, stored_session, "Session expired")
+    return absolute_expires_at
+
+
+async def _extend_if_needed(
+    session: SessionDep, stored_session: UserSession, now: datetime, absolute_expires_at: datetime
+) -> None:
     if (now - stored_session.last_refreshed_at) >= timedelta(minutes=settings.session_rolling_interval_minutes):
-        stored_session.expires_at = now + timedelta(minutes=settings.session_extend_minutes)
+        new_expiry = now + timedelta(minutes=settings.session_extend_minutes)
+        stored_session.expires_at = min(new_expiry, absolute_expires_at)
         stored_session.last_refreshed_at = now
         await session.commit()
 
 
-async def _check_expiry(session: SessionDep, stored_session: UserSession) -> None:
-    now = datetime.now(timezone.utc)
+async def _check_expiry(session: SessionDep, stored_session: UserSession, now: datetime) -> None:
     if stored_session.expires_at <= now:
-        await session.delete(stored_session)
-        await session.commit()
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Session expired")
+        await _expire_session(session, stored_session, "Session expired")
 
 
 async def _get_session_user(session: SessionDep, stored_session: UserSession) -> User:
     user = await session.get(User, stored_session.user_id)
     if not user:
-        await session.delete(stored_session)
-        await session.commit()
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "User not found")
+        await _expire_session(session, stored_session, "User not found")
     return user
+
+
+async def _expire_session(session: SessionDep, stored_session: UserSession, message: str) -> None:
+    await session.delete(stored_session)
+    await session.commit()
+    raise HTTPException(status.HTTP_401_UNAUTHORIZED, message)
 
 
 def _extract_access_token(request: Request) -> str:

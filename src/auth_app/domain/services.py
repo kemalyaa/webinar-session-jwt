@@ -36,7 +36,12 @@ class AuthServiceSession:
         if not user or not security.verify_password(password, user.password_hash):
             raise InvalidCredentialsError
         raw_token, token_hash = tokens.generate_session_token()
-        expires_at = datetime.now(timezone.utc) + timedelta(minutes=settings.session_extend_minutes)
+        now = datetime.now(timezone.utc)
+        absolute_expires_at = now + timedelta(days=settings.session_absolute_timeout_days)
+        expires_at = min(
+            absolute_expires_at,
+            now + timedelta(minutes=settings.session_extend_minutes),
+        )
         await self.db.auth.create_session(user_id=user.id, token_hash=token_hash, expires_at=expires_at)
         await self.db.session.commit()
         return user, raw_token
